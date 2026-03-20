@@ -1,0 +1,160 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Portfolio and resume of Ryan Fransen-Pruden, Software Engineer.",
+} = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --surface: #1a1d27;
+        --border: #2a2d3a;
+        --accent: #7aa2f7;
+        --accent2: #9ece6a;
+        --text: #c0caf5;
+        --muted: #565f89;
+        --heading: #e0e4f5;
+        --font: "Segoe UI", system-ui, sans-serif;
+        --mono: "JetBrains Mono", "Fira Code", monospace;
+      }
+
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .container {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      header {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 2rem;
+        margin-bottom: 2.5rem;
+      }
+
+      header h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.02em;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        color: var(--accent);
+        margin-top: 0.25rem;
+        font-family: var(--mono);
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
+
+      .links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--muted);
+        font-size: 0.85rem;
+        padding: 0.3rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--surface);
+        transition: color 0.15s, border-color 0.15s;
+      }
+
+      .links a:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        text-decoration: none;
+      }
+
+      .links a svg {
+        flex-shrink: 0;
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+      }
+
+      h2 {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        font-family: var(--mono);
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 1.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+      <footer>
+        &copy; {new Date().getFullYear()}
+        {title}
+      </footer>
+    </div>
+  </body>
+</html>

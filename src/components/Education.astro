@@ -1,0 +1,63 @@
+---
+import { education, certs } from "../data/resume";
+---
+
+<section>
+  <h2>Education</h2>
+  <div class="edu-grid">
+    {
+      education.map((e) => (
+        <div class="edu-row">
+          <div>
+            <div class="edu-degree">{e.degree}</div>
+            <div class="edu-school">{e.school}</div>
+          </div>
+          <span class="edu-date">{e.date}</span>
+        </div>
+      ))
+    }
+    {
+      certs.map(({ name, date }) => (
+        <div class="edu-row">
+          <span class="cert">{name}</span>
+          <span class="edu-date">{date}</span>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .edu-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .edu-degree {
+    font-weight: 500;
+    color: var(--heading);
+    font-size: 0.95rem;
+  }
+  .edu-school {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .edu-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    white-space: nowrap;
+  }
+  .cert {
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { experience } from "../data/resume";
+---
+
+<section>
+  <h2>Experience</h2>
+  {
+    experience.map((co) => (
+      <div class="company-block">
+        <div class="company-header">
+          <span class="company-name">{co.company}</span>
+          <span class="company-location">{co.location}</span>
+        </div>
+        {co.roles.map((role) => (
+          <div class="role">
+            <div class="role-header">
+              <span class="role-title">{role.title}</span>
+              <span class="role-period">{role.period}</span>
+            </div>
+            <ul>
+              {role.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    ))
+  }
+</section>
+
+<style>
+  .company-block {
+    margin-bottom: 2rem;
+  }
+
+  .company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .company-name {
+    font-weight: 600;
+    color: var(--heading);
+    font-size: 1rem;
+  }
+  .company-location {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .role {
+    margin-bottom: 1.25rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .role-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-title {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .role-period {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  li {
+    font-size: 0.9rem;
+    color: var(--text);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+</style>
