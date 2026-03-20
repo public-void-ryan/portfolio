@@ -30,12 +30,12 @@ jobs:
         run: npm --prefix "$WORK_DIR" run build
 
       - name: Deploy
-        run: rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
+        run: /run/current-system/sw/bin/rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
 
       - name: Notify Success
         if: success()
         run: |
-          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
+          /run/current-system/sw/bin/curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
                -F "title=✅ Portfolio Deployed" \
                -F "message=Portfolio deployed successfully for commit ${{ github.sha }}." \
                -F "priority=5"
@@ -43,7 +43,7 @@ jobs:
       - name: Notify Failure
         if: failure()
         run: |
-          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
+          /run/current-system/sw/bin/curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
                -F "title=❌ Portfolio Deploy Failed" \
                -F "message=Deploy failed for commit ${{ github.sha }}." \
                -F "priority=8"
