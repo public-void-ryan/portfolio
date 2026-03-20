@@ -95,7 +95,7 @@ export const experience = [
     roles: [
       {
         title: "Yard and Receiving Manager",
-        period: "Oct 2013 – Feb 2021",
+        period: "Oct 2013 - Feb 2021",
         bullets: [
           "Managed a team of 30+ in receiving operations; improved freight handling by 40%.",
           "Supported the busiest Menards location in Minnesota.",
