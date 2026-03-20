@@ -37,6 +37,7 @@ const {
         --heading: #e0e4f5;
         --font: "Segoe UI", system-ui, sans-serif;
         --mono: "JetBrains Mono", "Fira Code", monospace;
+        --sidebar-w: 100px;
       }
 
       html {
@@ -50,6 +51,7 @@ const {
         font-family: var(--font);
         line-height: 1.6;
         min-height: 100vh;
+        display: flex;
       }
 
       a {
@@ -60,15 +62,54 @@ const {
         text-decoration: underline;
       }
 
+      /* Sidebar */
+      nav {
+        width: var(--sidebar-w);
+        flex-shrink: 0;
+        border-right: 1px solid var(--border);
+        min-height: 100vh;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 1rem;
+        gap: 2rem;
+      }
+
+      .nav-home {
+        font-family: var(--mono);
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--accent);
+        letter-spacing: -0.02em;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+        color: var(--muted);
+        transition: color 0.15s;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      /* Main content */
       .container {
+        flex: 1;
         max-width: 860px;
-        margin: 0 auto;
-        padding: 2rem 1.5rem 4rem;
+        padding: 2rem 2rem 4rem;
       }
 
       header {
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 2rem;
         margin-bottom: 2.5rem;
       }
 
@@ -141,14 +182,48 @@ const {
         text-align: center;
       }
 
+      /* Mobile: sidebar becomes top bar */
       @media (max-width: 600px) {
+        body {
+          flex-direction: column;
+        }
+
+        nav {
+          width: 100%;
+          min-height: unset;
+          height: auto;
+          position: static;
+          flex-direction: row;
+          align-items: center;
+          padding: 0.75rem 1rem;
+          gap: 1.5rem;
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .nav-links {
+          flex-direction: row;
+          gap: 1rem;
+        }
+
         header h1 {
           font-size: 1.6rem;
+        }
+
+        .container {
+          padding: 1.5rem 1rem 3rem;
         }
       }
     </style>
   </head>
   <body>
+    <nav>
+      <a href="/" class="nav-home">Home</a>
+      <div class="nav-links">
+        <a href="/portfolio">Portfolio</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </nav>
     <div class="container">
       <slot />
       <footer>
