@@ -26,6 +26,9 @@ jobs:
         env:
           npm_config_cache: /tmp/npm-cache
 
+      - name: Test
+        run: npm --prefix "$WORK_DIR" test
+
       - name: Build
         run: npm --prefix "$WORK_DIR" run build
 
