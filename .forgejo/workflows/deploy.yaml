@@ -1,0 +1,41 @@
+name: Deploy Portfolio
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GOTIFY_PORT: "8080"
+
+jobs:
+  build-and-deploy:
+    runs-on: native
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to VPS
+        run: |
+          rsync -a --delete dist/ /var/www/portfolio/
+
+      - name: Notify Success
+        if: success()
+        run: |
+          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
+               -F "title=✅ Portfolio Deployed" \
+               -F "message=Portfolio deployed successfully for commit ${{ github.sha }}." \
+               -F "priority=5"
+
+      - name: Notify Failure
+        if: failure()
+        run: |
+          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_PORT }}" \
+               -F "title=❌ Portfolio Deploy Failed" \
+               -F "message=Deploy failed for commit ${{ github.sha }}." \
+               -F "priority=8"
