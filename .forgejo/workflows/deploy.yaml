@@ -6,7 +6,7 @@ on:
 
 env:
   GOTIFY_PORT: "8080"
-  WORK_DIR: /var/lib/forgejo/portfolio
+  WORK_DIR: /var/lib/forgejo-runner/portfolio
 
 jobs:
   build-and-deploy:
