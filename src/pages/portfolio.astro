@@ -1,5 +1,37 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const projects = [
+  {
+    title: "Project One",
+    description: "A short description of what this project does and the problem it solves.",
+    tags: ["C#", "Docker"],
+    github: "https://github.com/public-void-ryan",
+    demo: null,
+  },
+  {
+    title: "Project Two",
+    description: "A short description of what this project does and the problem it solves.",
+    tags: ["Python", "SQL"],
+    github: "https://github.com/public-void-ryan",
+    demo: null,
+  },
+  {
+    title: "Personal Portfolio",
+    description: "This site — a resume and project portfolio built with Astro. Statically generated, no frameworks, deployed via Forgejo Actions.",
+    tags: ["Astro", "TypeScript", "NixOS"],
+    github: "https://github.com/public-void-ryan",
+    demo: "https://ryanfp.dev",
+  },
+  {
+    title: "PEAK Health Nepal",
+    description: "Website and social media presence for a nonprofit providing ICU nurse training in Nepal. Features a resource library, donation integration, and admin tooling.",
+    tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
+    github: null,
+    demo: "https://peakhealthnepal.org/",
+    thumbnail: "/thumbnails/peak.webp",
+  },
+];
 ---
 
 <Layout title="Portfolio — Ryan Fransen-Pruden">
@@ -8,13 +40,99 @@ import Layout from "../layouts/Layout.astro";
   </header>
 
   <section>
-    <p class="placeholder">Coming soon.</p>
+    <h2>Projects</h2>
+    <div class="grid">
+      {projects.map((p) => (
+        <div class="card">
+          {p.thumbnail && (
+            <img class="card-thumb" src={p.thumbnail} alt={p.title} loading="lazy" />
+          )}
+          <div class="card-body">
+            <h3>{p.title}</h3>
+            <p>{p.description}</p>
+            <div class="tags">
+              {p.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+          <div class="card-links">
+            {p.github && <a href={p.github} target="_blank" rel="noopener">GitHub</a>}
+            {p.demo && <a href={p.demo} target="_blank" rel="noopener">Live</a>}
+          </div>
+        </div>
+      ))}
+    </div>
   </section>
 </Layout>
 
 <style>
-  .placeholder {
-    color: var(--muted);
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .card-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px 6px 0 0;
+    margin: -1.25rem -1.25rem 0;
+    width: calc(100% + 2.5rem);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .card-body h3 {
     font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--heading);
+  }
+
+  .card-body p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.25rem;
+  }
+
+  .tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    font-family: var(--mono);
+  }
+
+  .card-links {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .card-links a {
+    color: var(--accent);
   }
 </style>
