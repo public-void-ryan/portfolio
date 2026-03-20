@@ -6,29 +6,31 @@ on:
 
 env:
   GOTIFY_PORT: "8080"
+  WORK_DIR: /var/lib/forgejo/portfolio
 
 jobs:
   build-and-deploy:
     runs-on: native
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        run: |
+          if [ -d "$WORK_DIR/.git" ]; then
+            git -C "$WORK_DIR" fetch origin main
+            git -C "$WORK_DIR" reset --hard origin/main
+          else
+            git clone ssh://forgejo@git.0ku.xyz/ryan/portfolio.git "$WORK_DIR"
+          fi
 
       - name: Install dependencies
-        run: |
-          find node_modules -name "esbuild" -type f -exec chmod +x {} \; 2>/dev/null || true
-          npm install
+        run: npm --prefix "$WORK_DIR" install
         env:
-          npm_config_cache: /tmp/npm-cache-${{ github.run_id }}
+          npm_config_cache: /tmp/npm-cache
 
       - name: Build
-        run: npm run build
-        env:
-          npm_config_cache: /tmp/npm-cache-${{ github.run_id }}
+        run: npm --prefix "$WORK_DIR" run build
 
-      - name: Deploy to VPS
-        run: |
-          rsync -a --delete dist/ /var/www/portfolio/
+      - name: Deploy
+        run: rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
 
       - name: Notify Success
         if: success()
