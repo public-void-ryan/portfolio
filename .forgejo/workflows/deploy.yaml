@@ -15,10 +15,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+        env:
+          npm_config_cache: /tmp/npm-cache-${{ github.run_id }}
 
       - name: Build
         run: npm run build
+        env:
+          npm_config_cache: /tmp/npm-cache-${{ github.run_id }}
 
       - name: Deploy to VPS
         run: |
@@ -35,7 +39,7 @@ jobs:
       - name: Notify Failure
         if: failure()
         run: |
-          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_PORT }}" \
+          curl -s -X POST "http://127.0.0.1:${GOTIFY_PORT}/message?token=${{ secrets.GOTIFY_TOKEN }}" \
                -F "title=❌ Portfolio Deploy Failed" \
                -F "message=Deploy failed for commit ${{ github.sha }}." \
                -F "priority=8"
