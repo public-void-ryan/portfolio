@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1773986956093" clover="3.2.0">
+  <project timestamp="1773986956093" name="All files">
+    <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="7" coveredelements="7" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="resume.ts" path="/home/ryan/portfolio/src/data/resume.ts">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="49" count="1" type="stmt"/>
+      <line num="109" count="1" type="stmt"/>
+      <line num="122" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
