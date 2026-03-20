@@ -16,7 +16,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rm -rf node_modules
+          find node_modules -name "esbuild" -type f -exec chmod +x {} \; 2>/dev/null || true
           npm install
         env:
           npm_config_cache: /tmp/npm-cache-${{ github.run_id }}
