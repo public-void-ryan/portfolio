@@ -1,43 +1,48 @@
-# Astro Starter Kit: Minimal
+# Portfolio — Ryan Fransen-Pruden
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal portfolio and resume site built with [Astro](https://astro.build) and TypeScript. Statically generated and deployed via Forgejo Actions.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+**Live:** https://ryanfp.dev
 
 ## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
 ├── public/
+│   ├── favicon.ico
+│   ├── favicon.svg
+│   └── thumbnails/
 ├── src/
+│   ├── components/
+│   │   ├── Education.astro
+│   │   ├── Experience.astro
+│   │   └── Skills.astro
+│   ├── data/
+│   │   ├── resume.ts
+│   │   └── resume.test.ts
+│   ├── layouts/
+│   │   └── Layout.astro
 │   └── pages/
-│       └── index.astro
-└── package.json
+│       ├── contact.astro
+│       ├── index.astro
+│       └── portfolio.astro
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+Resume data lives in `src/data/resume.ts` and is imported by page and component files. Pages are under `src/pages/` and map to routes by file name (`/`, `/portfolio`, `/contact`).
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command                  | Action                                        |
+| :----------------------- | :-------------------------------------------- |
+| `npm install`            | Installs dependencies                         |
+| `npm run dev`            | Starts local dev server at `localhost:4321`   |
+| `npm run build`          | Build your production site to `./dist/`       |
+| `npm run preview`        | Preview your build locally, before deploying  |
+| `npm run test`           | Run tests with Vitest                         |
+| `npm run test:watch`     | Run tests in watch mode                       |
+| `npm run test:coverage`  | Run tests with coverage report                |
