@@ -6,29 +6,37 @@ on:
 
 env:
   GOTIFY_PORT: "8080"
+  WORK_DIR: /tmp/portfolio-${{ github.run_id }}-${{ github.run_attempt }}
 
 jobs:
   build-and-deploy:
     runs-on: native
     steps:
+      - name: Checkout Code
+        run: |
+          /run/current-system/sw/bin/rm -rf "$WORK_DIR"
+          /run/current-system/sw/bin/timeout 90 \
+            git -c http.extraHeader="Authorization: token ${{ github.token }}" \
+            clone --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git" "$WORK_DIR"
+
       - name: Verify Node Runtime
         run: |
           node --version
           npm --version
-          echo "$GITHUB_WORKSPACE"
-          ls -la "$GITHUB_WORKSPACE"
+          echo "$WORK_DIR"
+          ls -la "$WORK_DIR"
 
       - name: Install dependencies
-        run: npm --prefix "$GITHUB_WORKSPACE" ci
+        run: npm --prefix "$WORK_DIR" ci
 
       - name: Test
-        run: npm --prefix "$GITHUB_WORKSPACE" test
+        run: npm --prefix "$WORK_DIR" test
 
       - name: Build
-        run: npm --prefix "$GITHUB_WORKSPACE" run build
+        run: npm --prefix "$WORK_DIR" run build
 
       - name: Deploy
-        run: /run/current-system/sw/bin/rsync -a --delete "$GITHUB_WORKSPACE/dist/" /var/www/portfolio/
+        run: /run/current-system/sw/bin/rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
 
       - name: Notify Success
         if: success()
