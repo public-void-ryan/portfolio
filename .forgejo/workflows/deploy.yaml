@@ -6,34 +6,30 @@ on:
 
 env:
   GOTIFY_PORT: "8080"
-  WORK_DIR: /tmp/portfolio-${{ github.run_id }}-${{ github.run_attempt }}
 
 jobs:
   build-and-deploy:
     runs-on: native
     steps:
-      - name: Checkout Code
-        run: |
-          git clone https://git.0ku.xyz/ryan/portfolio.git "$WORK_DIR"
-
       - name: Verify Node Runtime
         run: |
           node --version
           npm --version
+          pwd
 
       - name: Install dependencies
-        run: npm --prefix "$WORK_DIR" ci
+        run: npm ci
         env:
           npm_config_cache: /tmp/npm-cache
 
       - name: Test
-        run: npm --prefix "$WORK_DIR" test
+        run: npm test
 
       - name: Build
-        run: npm --prefix "$WORK_DIR" run build
+        run: npm run build
 
       - name: Deploy
-        run: /run/current-system/sw/bin/rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
+        run: /run/current-system/sw/bin/rsync -a --delete "dist/" /var/www/portfolio/
 
       - name: Notify Success
         if: success()
