@@ -10,19 +10,25 @@ const contactLinks = links.filter(
 <Layout title="Contact — Ryan Fransen-Pruden">
   <header>
     <h1>Contact</h1>
-    <p class="subtitle">Got a project in mind or just want to connect?</p>
+    <p class="subtitle">Open to engineering roles, contracts, and collaboration</p>
   </header>
 
-  <div class="contact-grid">
-    <section class="primary-section">
-      <h2>Reach Out</h2>
+  <section class="contact-shell">
+    <div class="contact-main">
+      <div class="section-label">Get started</div>
+      <h2 class="section-heading">Best channel: LinkedIn.<br />Fastest response: GitHub + LinkedIn.</h2>
       <p class="intro">
-        Best way to connect is through LinkedIn or GitHub. If you are interested in
-        working together, send me a message on LinkedIn.
+        If you are hiring, building something, or want to talk automation and software
+        quality, send me a message. Include scope and timeline for the fastest reply.
       </p>
       <div class="cta-list">
         {contactLinks.map((link) => (
-          <a href={link.href} target="_blank" rel="noopener" class="cta-item">
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener"
+            class:list={["cta-item", link.label === "LinkedIn" ? "btn-primary" : "btn-secondary"]}
+          >
             <span class="link-icon">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -37,10 +43,10 @@ const contactLinks = links.filter(
           </a>
         ))}
       </div>
-    </section>
+    </div>
 
-    <section class="links-section">
-      <h2>Profiles</h2>
+    <aside class="profiles-panel">
+      <div class="section-label">Profiles</div>
       <div class="link-list">
         {contactLinks.map((link) => (
           <a href={link.href} target="_blank" rel="noopener" class="link-item">
@@ -61,79 +67,126 @@ const contactLinks = links.filter(
           </a>
         ))}
       </div>
-    </section>
-  </div>
+    </aside>
+  </section>
 </Layout>
 
 <style>
-  .subtitle {
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin-top: 0.5rem;
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-bottom: 0.75rem;
   }
 
-  .contact-grid {
+  .section-label::before {
+    content: "// ";
+  }
+
+  .contact-shell {
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 2rem;
+    grid-template-columns: 1fr 320px;
+    gap: 0;
     align-items: start;
-  }
-
-  .primary-section {
-    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.75rem;
   }
 
-  .primary-section h2 {
-    margin-bottom: 1rem;
+  .contact-main {
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    padding: 2.5rem;
+    animation: fadeUp 0.55s ease forwards;
+  }
+
+  .contact-main h2 {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    border-bottom: none;
+    padding-bottom: 0;
+    text-transform: none;
+    color: var(--text);
+  }
+
+  .section-heading {
+    max-width: 24ch;
   }
 
   .intro {
     color: var(--muted);
-    font-size: 0.92rem;
-    line-height: 1.55;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    font-family: var(--font);
+    font-weight: 300;
+    max-width: 52ch;
   }
 
   .cta-list {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
   }
 
   .cta-item {
     display: inline-flex;
     align-items: center;
     gap: 0.65rem;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    background: color-mix(in srgb, var(--bg) 60%, transparent);
-    padding: 0.65rem 0.75rem;
+    padding: 0.75rem 1.75rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
     font-weight: 600;
-    transition: border-color 0.15s, color 0.15s;
-  }
-
-  .cta-item:hover {
-    border-color: var(--accent);
-    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     text-decoration: none;
+    border: 1px solid var(--border-bright);
+    transition: all 0.2s;
   }
 
-  .links-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 1.25rem;
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-bright);
+  }
+
+  .btn-secondary:hover {
+    color: var(--text);
+    border-color: var(--text);
+  }
+
+  .cta-item .link-icon {
+    color: currentColor;
+  }
+
+  .profiles-panel {
+    background: var(--bg);
+    padding: 2.5rem 1.5rem;
+    animation: fadeUp 0.55s ease forwards 0.1s;
+    opacity: 0;
   }
 
   .link-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0;
     margin-top: 1rem;
+    border: 1px solid var(--border);
   }
 
   .link-item {
@@ -141,16 +194,18 @@ const contactLinks = links.filter(
     align-items: center;
     gap: 0.75rem;
     color: var(--text);
-    padding: 0.6rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
+    padding: 0.9rem 0.75rem;
+    border-bottom: 1px solid var(--border);
     transition: border-color 0.15s, color 0.15s;
   }
 
+  .link-item:last-child {
+    border-bottom: none;
+  }
+
   .link-item:hover {
-    border-color: var(--accent);
     color: var(--accent);
-    text-decoration: none;
+    background: color-mix(in srgb, var(--bg2) 50%, transparent);
   }
 
   .link-icon {
@@ -160,19 +215,45 @@ const contactLinks = links.filter(
   }
 
   .link-label {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .link-value {
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     color: var(--muted);
     font-family: var(--mono);
+    margin-top: 0.2rem;
+    word-break: break-word;
   }
 
-  @media (max-width: 700px) {
-    .contact-grid {
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .contact-shell {
       grid-template-columns: 1fr;
+    }
+
+    .contact-main {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+    }
+
+    .profiles-panel {
+      padding: 2rem 1.25rem;
     }
   }
 </style>
