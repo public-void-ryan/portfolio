@@ -21,8 +21,15 @@ jobs:
             git clone ssh://forgejo@git.0ku.xyz/ryan/portfolio.git "$WORK_DIR"
           fi
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.12.0"
+          cache: npm
+          cache-dependency-path: ${{ env.WORK_DIR }}/package-lock.json
+
       - name: Install dependencies
-        run: npm --prefix "$WORK_DIR" install
+        run: npm --prefix "$WORK_DIR" ci
         env:
           npm_config_cache: /tmp/npm-cache
 

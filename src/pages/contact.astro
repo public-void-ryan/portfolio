@@ -2,8 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import { links } from "../data/resume";
 
-const linkedin = links.find((l) => l.label === "LinkedIn")!;
-const github = links.find((l) => l.label === "GitHub")!;
+const contactLinks = links.filter(
+  (link) => link.label === "LinkedIn" || link.label === "GitHub",
+);
 ---
 
 <Layout title="Contact — Ryan Fransen-Pruden">
@@ -13,54 +14,52 @@ const github = links.find((l) => l.label === "GitHub")!;
   </header>
 
   <div class="contact-grid">
-    <section class="form-section">
-      <h2>Send a Message</h2>
-      <form class="form">
-        <div class="row">
-          <div class="field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="name" />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" />
-          </div>
-        </div>
-        <div class="field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="6" placeholder="What's on your mind?"></textarea>
-        </div>
-        <button type="submit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-          Send Message
-        </button>
-      </form>
+    <section class="primary-section">
+      <h2>Reach Out</h2>
+      <p class="intro">
+        Best way to connect is through LinkedIn or GitHub. If you are interested in
+        working together, send me a message on LinkedIn.
+      </p>
+      <div class="cta-list">
+        {contactLinks.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener" class="cta-item">
+            <span class="link-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                set:html={link.icon}
+              />
+            </span>
+            <span>{link.label}</span>
+          </a>
+        ))}
+      </div>
     </section>
 
     <section class="links-section">
-      <h2>Find Me Online</h2>
+      <h2>Profiles</h2>
       <div class="link-list">
-        <a href={linkedin.href} target="_blank" rel="noopener" class="link-item">
-          <span class="link-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" set:html={linkedin.icon} />
-          </span>
-          <div>
-            <div class="link-label">LinkedIn</div>
-            <div class="link-value">ryan-fransen-pruden</div>
-          </div>
-        </a>
-        <a href={github.href} target="_blank" rel="noopener" class="link-item">
-          <span class="link-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" set:html={github.icon} />
-          </span>
-          <div>
-            <div class="link-label">GitHub</div>
-            <div class="link-value">public-void-ryan</div>
-          </div>
-        </a>
+        {contactLinks.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener" class="link-item">
+            <span class="link-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                set:html={link.icon}
+              />
+            </span>
+            <div>
+              <div class="link-label">{link.label}</div>
+              <div class="link-value">{link.href.replace(/^https?:\/\//, "")}</div>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   </div>
@@ -80,100 +79,47 @@ const github = links.find((l) => l.label === "GitHub")!;
     align-items: start;
   }
 
-  .form-section {
+  .primary-section {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 1.75rem;
   }
 
-  .form-section h2 {
-    margin-bottom: 1.5rem;
+  .primary-section h2 {
+    margin-bottom: 1rem;
   }
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-  }
-
-  .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  label {
-    font-size: 0.75rem;
-    font-weight: 600;
+  .intro {
     color: var(--muted);
-    font-family: var(--mono);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
 
-  input,
-  textarea {
-    background: var(--bg);
+  .cta-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .cta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text);
-    font-family: var(--font);
-    font-size: 0.9rem;
-    padding: 0.65rem 0.9rem;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-    resize: vertical;
-    width: 100%;
-  }
-
-  input::placeholder,
-  textarea::placeholder {
-    color: var(--muted);
-    opacity: 0.6;
-  }
-
-  input:focus,
-  textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
-  }
-
-  button {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: var(--bg);
-    border: none;
-    border-radius: 6px;
-    font-size: 0.875rem;
+    background: color-mix(in srgb, var(--bg) 60%, transparent);
+    padding: 0.65rem 0.75rem;
     font-weight: 600;
-    padding: 0.65rem 1.4rem;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
+    transition: border-color 0.15s, color 0.15s;
   }
 
-  button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  button:active {
-    transform: translateY(0);
-  }
-
-  @media (max-width: 500px) {
-    .row {
-      grid-template-columns: 1fr;
-    }
+  .cta-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    text-decoration: none;
   }
 
   .links-section {

@@ -12,15 +12,13 @@ import { education, certs } from "../data/resume";
             <div class="edu-degree">{e.degree}</div>
             <div class="edu-school">{e.school}</div>
           </div>
-          <span class="edu-date">{e.date}</span>
         </div>
       ))
     }
     {
-      certs.map(({ name, date }) => (
+      certs.map(({ name }) => (
         <div class="edu-row">
           <span class="cert">{name}</span>
-          <span class="edu-date">{date}</span>
         </div>
       ))
     }
@@ -36,7 +34,6 @@ import { education, certs } from "../data/resume";
 
   .edu-row {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.25rem;
   }
@@ -49,12 +46,6 @@ import { education, certs } from "../data/resume";
   .edu-school {
     font-size: 0.85rem;
     color: var(--muted);
-  }
-  .edu-date {
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-family: var(--mono);
-    white-space: nowrap;
   }
   .cert {
     color: var(--text);
