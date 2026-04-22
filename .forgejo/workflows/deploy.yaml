@@ -27,7 +27,7 @@ jobs:
           ls -la "$WORK_DIR"
 
       - name: Install dependencies
-        run: npm --prefix "$WORK_DIR" ci
+        run: npm --prefix "$WORK_DIR" install
 
       - name: Test
         run: npm --prefix "$WORK_DIR" test
@@ -36,7 +36,7 @@ jobs:
         run: npm --prefix "$WORK_DIR" run build
 
       - name: Deploy
-        run: /run/current-system/sw/bin/rsync -a --delete "$WORK_DIR/dist/" /var/www/portfolio/
+        run: sudo /run/current-system/sw/bin/rsync -rlptD --delete "$WORK_DIR/dist/" /var/www/portfolio/
 
       - name: Notify Success
         if: success()
