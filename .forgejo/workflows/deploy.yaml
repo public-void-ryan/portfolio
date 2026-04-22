@@ -14,12 +14,8 @@ jobs:
     steps:
       - name: Checkout Code
         run: |
-          if [ -d "$WORK_DIR/.git" ]; then
-            git -C "$WORK_DIR" fetch origin main
-            git -C "$WORK_DIR" reset --hard origin/main
-          else
-            git clone ssh://forgejo@git.0ku.xyz/ryan/portfolio.git "$WORK_DIR"
-          fi
+          rm -rf "$WORK_DIR"
+          git clone ssh://forgejo@git.0ku.xyz/ryan/portfolio.git "$WORK_DIR"
 
       - name: Verify Node Runtime
         run: |
